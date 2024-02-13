@@ -17,35 +17,35 @@ public class PlayerController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
     }
 
-        void Update()
-        {
-        inputRaw = Input.GetAxisRaw("Horizontal");
-            moveLeftRight();
-            moveJump();
-        flipSprite();
-            Debug.Log(inputRaw);
-        }
-
-
-
-        void moveLeftRight()
-        {
-            playerRb.velocity = new Vector2(inputRaw * moveSpeed * Time.deltaTime, playerRb.velocity.y);
-
-
-            playerAnimator.SetBool("Running",true);
-        }
-
-     void flipSprite()
+    void Update()
     {
-        if (playerRb.velocity.x>0)
+        inputRaw = Input.GetAxisRaw("Horizontal");
+        moveLeftRight();
+        moveJump();
+        flipSprite();
+
+    }
+
+
+
+    void moveLeftRight()
+    {
+        playerRb.velocity = new Vector2(inputRaw * moveSpeed * Time.deltaTime, playerRb.velocity.y);
+
+
+        playerAnimator.SetBool("Running", true);
+    }
+
+    void flipSprite()
+    {
+        if (playerRb.velocity.x > 0)
         {
             playerSpRenderer.flipX = false;
         }
-       
+
         else if (playerRb.velocity.x < 0)
         {
-            playerSpRenderer.flipX=true;
+            playerSpRenderer.flipX = true;
         }
         else
         {
@@ -57,12 +57,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void moveJump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && GroundCheck.isGrounded == true)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && GroundCheck.isGrounded == true)
-            {
-                playerRb.velocity = new Vector2(playerRb.velocity.x, Time.deltaTime * jumpPower);
-            }
+            playerRb.velocity = new Vector2(playerRb.velocity.x, Time.deltaTime * jumpPower);
         }
-
     }
+
+}
 
